@@ -1,0 +1,61 @@
+package com.ymhase.miniTwit.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.ymhase.miniTwit.QueriesConstant;
+import com.ymhase.miniTwit.mapper.TweetFollowingMapper;
+import com.ymhase.miniTwit.mapper.TweetModelMapper;
+
+@Repository
+public class TweetDaoImp implements TweetDao {
+
+	@Autowired
+	NamedParameterJdbcTemplate jdbctemplate;
+
+	public List<TweetModelMapper> getTweetbyUserID(String userId) {
+
+		List<TweetModelMapper> list = new ArrayList<TweetModelMapper>();
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("userId", userId);
+
+		System.out.println(jdbctemplate.getJdbcOperations().toString());
+
+		list = jdbctemplate.query(QueriesConstant.getTweetbyUserID, namedParameters, new TweetModelMapper());
+
+		return list;
+	}
+
+	public List<TweetFollowingMapper> getTweetForFollowing(String userId) {
+		List<TweetFollowingMapper> list = new ArrayList<TweetFollowingMapper>();
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("userId", userId);
+
+		list = jdbctemplate.query(QueriesConstant.getTweetForFollowing, namedParameters, new TweetFollowingMapper());
+
+		return list;
+
+	}
+
+	public boolean deleteTweet(String tweetID) {
+		int insertStatus;
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("tweetID", tweetID);
+
+		insertStatus = jdbctemplate.update(QueriesConstant.deleteTweet, namedParameters);
+
+		if (insertStatus == 1)
+			return true;
+		else
+			return false;
+	}
+
+}

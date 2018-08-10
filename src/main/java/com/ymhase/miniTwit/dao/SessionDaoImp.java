@@ -1,0 +1,58 @@
+package com.ymhase.miniTwit.dao;
+
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.ymhase.miniTwit.QueriesConstant;
+
+@Repository
+public class SessionDaoImp implements SessionDao {
+
+	@Autowired
+	NamedParameterJdbcTemplate jdbctemplate;
+
+	public String getUseridBySessionId(String sessionId) {
+		String userID = null;
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("sessionid", sessionId);
+
+		userID = jdbctemplate.queryForObject(QueriesConstant.getUserIDBySessionID, namedParameters, String.class);
+
+		return userID;
+	}
+
+	public boolean createSessionId(String userId) {
+		int insertStatus;
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("sessionid", UUID.randomUUID());
+		namedParameters.addValue("userid", userId);
+
+		insertStatus = jdbctemplate.update(QueriesConstant.createSession, namedParameters);
+		if (insertStatus == 1)
+			return true;
+		else
+			return false;
+	}
+
+	public boolean deleteSessionId(String sessionid) {
+
+		int insertStatus;
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("sessionid", sessionid);
+
+		insertStatus = jdbctemplate.update(QueriesConstant.deleteSession, namedParameters);
+		if (insertStatus == 1)
+			return true;
+		else
+			return false;
+
+	}
+
+}
