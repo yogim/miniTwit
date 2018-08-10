@@ -6,6 +6,7 @@ public class QueriesConstant {
 	public static final String isvalidUser = "SELECT count(*) FROM users WHERE username = :username AND  password = :password AND deletestatus = 'A'";
 	public static final String getUserByUernamePassword = "SELECT * FROM users WHERE username = :username AND  password = :password AND deletestatus = 'A'";
 	public static final String getUsernameByEmail = "SELECT username FROM users WHERE email = :email AND deletestatus = 'A';";
+	public static final String getUserByUserId = "SELECT * FROM users WHERE username = :userid AND deletestatus = 'A';";
 	public static final String insertUser = "INSERT INTO users (user_id, firstname, lastname, username, email, password, deletestatus) VALUES ( :userid, :firstName, :lastName, :userName, :email, :password, :status) ;";
 	
 	//Following
@@ -21,5 +22,5 @@ public class QueriesConstant {
 	public static final String getTweetbyUserID ="SELECT * FROM tweet WHERE user_id = :userid AND deletestatus = 'A';";
 	public static final String getTweetForFollowing = "SELECT tweet.user_id, tweet.description, users.firstname, users.lastname FROM tweet LEFT JOIN users ON users.user_id = tweet.user_id WHERE tweet.user_id IN  (SELECT follwing_user_id FROM following WHERE user_id = :userid AND deletestatus = 'A' ) AND tweet.deletestatus = 'A' ;";
 	public static final String deleteTweet ="UPDATE tweet SET deletestatus = 'D' WHERE tweetid = :tweetid;";
-
+	public static final String insertTweet ="INSERT INTO tweet (tweetid, user_id, description, deletestatus) VALUES ( :tweetid, :userid, :description, :deletestatus) ;";
 }

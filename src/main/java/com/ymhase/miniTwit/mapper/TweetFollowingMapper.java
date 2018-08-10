@@ -5,12 +5,12 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.ymhase.miniTwit.model.TweetFollwingModel;
+import com.ymhase.miniTwit.model.TweetFollowingModel;
 
 public class TweetFollowingMapper implements RowMapper {
 
 	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-		TweetFollwingModel tweetFollowingModel = new TweetFollwingModel();
+		TweetFollowingModel tweetFollowingModel = new TweetFollowingModel();
 		tweetFollowingModel.setFirstname("firstname");
 		tweetFollowingModel.setLastname("lastname");
 		tweetFollowingModel.setDescription("description");

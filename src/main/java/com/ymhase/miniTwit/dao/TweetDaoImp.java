@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.ymhase.miniTwit.QueriesConstant;
 import com.ymhase.miniTwit.mapper.TweetFollowingMapper;
 import com.ymhase.miniTwit.mapper.TweetModelMapper;
+import com.ymhase.miniTwit.model.TweetModel;
 
 @Repository
 public class TweetDaoImp implements TweetDao {
@@ -56,6 +57,25 @@ public class TweetDaoImp implements TweetDao {
 			return true;
 		else
 			return false;
+	}
+
+	public boolean insertTweet(TweetModel tweetModel) {
+
+		int insertStatus;
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("tweetid", tweetModel.getTweeId());
+		namedParameters.addValue("userid", tweetModel.getUserId());
+		namedParameters.addValue("description", tweetModel.getDescription());
+		namedParameters.addValue("deletestatus", tweetModel.getDeletestatus());
+
+		insertStatus = jdbctemplate.update(QueriesConstant.insertTweet, namedParameters);
+
+		if (insertStatus == 1)
+			return true;
+		else
+			return false;
+
 	}
 
 }

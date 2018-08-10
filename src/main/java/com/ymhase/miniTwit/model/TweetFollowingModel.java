@@ -1,6 +1,6 @@
 package com.ymhase.miniTwit.model;
 
-public class TweetFollwingModel {
+public class TweetFollowingModel {
 
 	private String userdID;
 	private String description;
