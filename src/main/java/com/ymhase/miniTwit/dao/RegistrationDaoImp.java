@@ -24,17 +24,7 @@ public class RegistrationDaoImp implements RegistrationDao {
 		namedParameters.addValue("email", userModel.getEmail());
 		namedParameters.addValue("password", userModel.getPassword());
 		namedParameters.addValue("status", userModel.getStatus());
-		
-/*		
-		 Map<String, Object> namedParameters = new HashMap<String, Object>();
-		namedParameters.put("userid", userModel.getUserid());
-		namedParameters.put("firstName", userModel.getFirstName());
-		namedParameters.put("lastName", userModel.getLastName());
-		namedParameters.put("userName", userModel.getUserName());
-		namedParameters.put("email", userModel.getEmail());
-		namedParameters.put("password", userModel.getPassword());
-		namedParameters.put("status", userModel.getStatus());*/
-		
+
 		System.out.println(userModel.getUserid());
 		System.out.println(userModel.getFirstName());
 		System.out.println(userModel.getLastName());
@@ -43,14 +33,9 @@ public class RegistrationDaoImp implements RegistrationDao {
 		System.out.println(userModel.getPassword());
 		System.out.println(userModel.getStatus());
 
-		int entry = jdbctemplate.update(QueriesConstant.insertUser, namedParameters);
+		jdbctemplate.queryForRowSet(QueriesConstant.insertTweet, namedParameters);
 
-		
-		
-		if (entry == 1)
-			return true;
-		else
-			return false;
+		return true;
 
 	}
 

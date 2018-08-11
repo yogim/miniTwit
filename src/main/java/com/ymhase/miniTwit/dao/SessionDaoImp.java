@@ -20,6 +20,7 @@ public class SessionDaoImp implements SessionDao {
 
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("sessionid", sessionId);
+		System.out.println(sessionId);
 
 		userID = jdbctemplate.queryForObject(QueriesConstant.getUserIDBySessionID, namedParameters, String.class);
 
@@ -55,4 +56,20 @@ public class SessionDaoImp implements SessionDao {
 
 	}
 
+	
+	
+	public boolean isSessionValid(String sessionid) {
+
+		Integer insertStatus;
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("sessionid", sessionid);
+
+		insertStatus = jdbctemplate.queryForObject(QueriesConstant.isSessionValid, namedParameters, Integer.class);
+		if (insertStatus == 1)
+			return true;
+		else
+			return false;
+
+	}
 }

@@ -1,33 +1,28 @@
 package com.ymhase.miniTwit.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ymhase.miniTwit.model.UserModel;
+import com.ymhase.miniTwit.service.SessionService;
 import com.ymhase.miniTwit.service.UserService;
 
 @RestController
-
 public class UserController {
 
 	@Autowired
 	UserService userservice;
 
-	@RequestMapping(method = RequestMethod.GET, value = "/user/{id}")
-	public UserModel getuser(@PathVariable String id) {
+	@Autowired
+	SessionService sessionService;
 
-		return userservice.getUser(id);
+	@RequestMapping(method = RequestMethod.GET, value = "/usersession")
+	public String session(HttpServletRequest req, HttpServletResponse response) {
+
+		return sessionService.getUserIdBysessionKey(req.getHeader("x-api-key"));
 	}
-
-	@RequestMapping(method = RequestMethod.PUT, value = "/update")
-	public void updateUser( @RequestBody UserModel userModel) {
-
-		userservice.updateUser(userModel);
-
-	}
-
 }

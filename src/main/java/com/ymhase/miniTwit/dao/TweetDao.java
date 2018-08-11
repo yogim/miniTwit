@@ -10,7 +10,7 @@ public interface TweetDao {
 
 	public List<TweetModelMapper> getTweetbyUserID(String userId);
 
-	public List<TweetFollowingMapper> getTweetForFollowing(String userId);
+	public List<TweetFollowingMapper> getFollowerTwit(String userId);
 
 	public boolean deleteTweet(String tweetID);
 	

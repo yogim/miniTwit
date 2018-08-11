@@ -14,7 +14,7 @@ public class TweetModelMapper implements RowMapper {
 		tweetModel.setTweeId(rs.getString("tweetid"));
 		tweetModel.setUserId(rs.getString("user_id"));
 		tweetModel.setDescription(rs.getString("description"));
-		tweetModel.setDescription(rs.getString("deletestatus"));
+		tweetModel.setDeletestatus(rs.getString("deletestatus"));
 
 		return tweetModel;
 	}

@@ -11,10 +11,10 @@ public class TweetFollowingMapper implements RowMapper {
 
 	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
 		TweetFollowingModel tweetFollowingModel = new TweetFollowingModel();
-		tweetFollowingModel.setFirstname("firstname");
-		tweetFollowingModel.setLastname("lastname");
-		tweetFollowingModel.setDescription("description");
-		tweetFollowingModel.setUserdID("user_id");
+		tweetFollowingModel.setFirstname(rs.getString("firstname"));
+		tweetFollowingModel.setLastname(rs.getString("lastname"));
+		tweetFollowingModel.setDescription(rs.getString("description"));
+		tweetFollowingModel.setUserdID(rs.getString("user_id"));
 
 		return tweetFollowingModel;
 	}

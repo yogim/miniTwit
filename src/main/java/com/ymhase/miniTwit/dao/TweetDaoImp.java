@@ -24,20 +24,20 @@ public class TweetDaoImp implements TweetDao {
 		List<TweetModelMapper> list = new ArrayList<TweetModelMapper>();
 
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-		namedParameters.addValue("userId", userId);
+		namedParameters.addValue("userid", userId);
 
-		System.out.println(jdbctemplate.getJdbcOperations().toString());
+		System.out.println(userId);
 
 		list = jdbctemplate.query(QueriesConstant.getTweetbyUserID, namedParameters, new TweetModelMapper());
 
 		return list;
 	}
 
-	public List<TweetFollowingMapper> getTweetForFollowing(String userId) {
+	public List<TweetFollowingMapper> getFollowerTwit(String userId) {
 		List<TweetFollowingMapper> list = new ArrayList<TweetFollowingMapper>();
 
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-		namedParameters.addValue("userId", userId);
+		namedParameters.addValue("userid", userId);
 
 		list = jdbctemplate.query(QueriesConstant.getTweetForFollowing, namedParameters, new TweetFollowingMapper());
 
