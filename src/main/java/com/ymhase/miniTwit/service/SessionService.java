@@ -20,7 +20,7 @@ public class SessionService {
 		return sessionDao.deleteSessionId(sessionKey);
 	}
 
-	public boolean createSession(String userId) {
+	public String createSession(String userId) {
 
 		return sessionDao.createSessionId(userId);
 	}

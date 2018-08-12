@@ -1,5 +1,8 @@
 package com.ymhase.miniTwit.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,55 +11,42 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ymhase.miniTwit.dto.LoginDto;
-import com.ymhase.miniTwit.service.LoginService;
+import com.ymhase.miniTwit.model.UserModel;
+import com.ymhase.miniTwit.service.SessionService;
+import com.ymhase.miniTwit.service.UserService;
 
 @RestController
 public class LoginController {
 
 	@Autowired
-	LoginService loginService;
+	UserService userService;
 
-	/*
-	 * @RequestMapping(method = RequestMethod.POST, value = "/login") public void
-	 * login(@RequestBody LoginDto loginDto) {
-	 * 
-	 * System.out.println(loginDto.getUsername()); loginService.login(loginDto);
-	 * 
-	 * }
-	 * 
-	 * @RequestMapping(method = RequestMethod.GET, value = "/getname") public
-	 * List<String> getName() {
-	 * 
-	 * return login.getuser();
-	 * 
-	 * }
-	 * 
-	 * @RequestMapping(method = RequestMethod.POST, value = "/userlist") public
-	 * List<UserModelMapper> userList(@RequestBody LoginDto loginDto) {
-	 * 
-	 * System.out.println(loginDto.getUsername()); return
-	 * login.getUserList(loginDto.getUsername(), loginDto.getPassword());
-	 * 
-	 * }
-	 */
+	@Autowired
+	SessionService sessionService;
 
 	@RequestMapping(method = RequestMethod.POST, value = "/login")
-	public String login(@RequestBody LoginDto loginDto) {
+	public Map<String, Object> login(@RequestBody LoginDto loginDto) {
 
-		if (loginService.login(loginDto)) {
-			return "is there";
+		Map<String, Object> response = new HashMap<String, Object>();
 
-		} else {
-			return "not there";
+		if ((userService.isUserValid(loginDto.getUsername(), loginDto.getPassword()))) {
+			UserModel model = userService.getUserbyUsernameAndPassword(loginDto.getUsername(), loginDto.getPassword());
+			response.put("usermodel", model);
+			response.put("session-key", sessionService.createSession(model.getUserid()));
 		}
 
-	}
-	
-	
-	@RequestMapping(method = RequestMethod.GET, value = "/forgotusername/{email:.+}")
-	public String login(@PathVariable String email) {
+		return response;
 
-		return loginService.forgotUsername(email);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/forgotusername/{email:.+}")
+	public Map<String, Object> forgotUsername(@PathVariable String email) {
+
+		Map<String, Object> response = new HashMap<String, Object>();
+
+		response.put("username", userService.forgotUsername(email));
+
+		return response;
 
 	}
 

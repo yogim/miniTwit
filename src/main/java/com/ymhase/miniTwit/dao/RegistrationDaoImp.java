@@ -23,17 +23,8 @@ public class RegistrationDaoImp implements RegistrationDao {
 		namedParameters.addValue("userName", userModel.getUserName());
 		namedParameters.addValue("email", userModel.getEmail());
 		namedParameters.addValue("password", userModel.getPassword());
-		namedParameters.addValue("status", userModel.getStatus());
 
-		System.out.println(userModel.getUserid());
-		System.out.println(userModel.getFirstName());
-		System.out.println(userModel.getLastName());
-		System.out.println(userModel.getUserName());
-		System.out.println(userModel.getEmail());
-		System.out.println(userModel.getPassword());
-		System.out.println(userModel.getStatus());
-
-		jdbctemplate.queryForRowSet(QueriesConstant.insertTweet, namedParameters);
+		jdbctemplate.queryForRowSet(QueriesConstant.insertUser, namedParameters);
 
 		return true;
 

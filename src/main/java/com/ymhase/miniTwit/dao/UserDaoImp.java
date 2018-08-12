@@ -10,7 +10,7 @@ import com.ymhase.miniTwit.mapper.UserModelMapper;
 import com.ymhase.miniTwit.model.UserModel;
 
 @Repository
-public class UserDaoImp implements UserDao {
+public class UserDaoImp {
 
 	@Autowired
 	NamedParameterJdbcTemplate jdbctemplate;
@@ -27,11 +27,50 @@ public class UserDaoImp implements UserDao {
 		return mapper;
 	}
 
-	public boolean createUser(UserModel userModel) {
+	public UserModel getUserbyUsernameAndPassword(String username, String password) {
 
-		int insertStatus;
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("username", username);
+		namedParameters.addValue("password", password);
 
-		UserModelMapper mapper = new UserModelMapper();
+		return (UserModel) jdbctemplate.queryForObject(QueriesConstant.getUserByUernamePassword, namedParameters,
+				new UserModelMapper());
+
+	}
+
+	public boolean isValiduser(String username, String password) {
+
+		System.out.println(username + password);
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("username", username);
+		namedParameters.addValue("password", password);
+
+		System.out.println(username + password);
+		Integer status = jdbctemplate.queryForObject(QueriesConstant.isvalidUser, namedParameters, Integer.class);
+
+		System.out.println(status);
+
+		if (status == 1) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public String getUsername(String email) {
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("email", email);
+
+		String usernname = jdbctemplate.queryForObject(QueriesConstant.getUsernameByEmail, namedParameters,
+				String.class);
+
+		return usernname;
+	}
+
+	public UserModel createUser(UserModel userModel) {
+
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("userid", userModel.getUserid());
 		namedParameters.addValue("firstName", userModel.getFirstName());
@@ -39,14 +78,30 @@ public class UserDaoImp implements UserDao {
 		namedParameters.addValue("userName", userModel.getUserName());
 		namedParameters.addValue("email", userModel.getEmail());
 		namedParameters.addValue("password", userModel.getPassword());
-		namedParameters.addValue("status", "A");
 
-		insertStatus = jdbctemplate.update(QueriesConstant.insertUser, namedParameters);
+		jdbctemplate.update(QueriesConstant.insertUser, namedParameters);
 
-		if (insertStatus == 1)
-			return true;
-		else
-			return false;
+		return userModel;
+
+	}
+
+	public UserModel getUserByUserID(String userID) {
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("userid", userID);
+
+		return (UserModel) jdbctemplate.queryForObject(QueriesConstant.getUserByUserId, namedParameters,
+				new UserModelMapper());
+
+	}
+
+	public void deleteuser(String userid) {
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("userid", userid);
+
+		jdbctemplate.update(QueriesConstant.deleteUser, namedParameters);
+
 	}
 
 }

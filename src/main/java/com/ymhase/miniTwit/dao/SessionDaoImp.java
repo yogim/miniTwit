@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.ymhase.miniTwit.QueriesConstant;
 
 @Repository
-public class SessionDaoImp implements SessionDao {
+public class SessionDaoImp {
 
 	@Autowired
 	NamedParameterJdbcTemplate jdbctemplate;
@@ -27,18 +27,14 @@ public class SessionDaoImp implements SessionDao {
 		return userID;
 	}
 
-	public boolean createSessionId(String userId) {
-		int insertStatus;
-
+	public String createSessionId(String userId) {
+		String sessionKey = UUID.randomUUID().toString();
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-		namedParameters.addValue("sessionid", UUID.randomUUID());
+		namedParameters.addValue("sessionid", sessionKey);
 		namedParameters.addValue("userid", userId);
+		jdbctemplate.update(QueriesConstant.createSession, namedParameters);
+		return sessionKey;
 
-		insertStatus = jdbctemplate.update(QueriesConstant.createSession, namedParameters);
-		if (insertStatus == 1)
-			return true;
-		else
-			return false;
 	}
 
 	public boolean deleteSessionId(String sessionid) {
@@ -56,8 +52,6 @@ public class SessionDaoImp implements SessionDao {
 
 	}
 
-	
-	
 	public boolean isSessionValid(String sessionid) {
 
 		Integer insertStatus;

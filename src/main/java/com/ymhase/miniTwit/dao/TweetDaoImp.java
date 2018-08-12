@@ -78,4 +78,16 @@ public class TweetDaoImp implements TweetDao {
 
 	}
 
+	public void createTwit(String userid, TweetModel tweetModel) {
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("tweetid", tweetModel.getTweeId());
+		namedParameters.addValue("userid", tweetModel.getUserId());
+		namedParameters.addValue("description", tweetModel.getDescription());
+		namedParameters.addValue("deletestatus", tweetModel.getDeletestatus());
+
+		jdbctemplate.update(QueriesConstant.insertTweet, namedParameters);
+
+	}
+
 }
