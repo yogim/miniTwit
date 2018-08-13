@@ -10,7 +10,7 @@ import com.ymhase.miniTwit.mapper.UserModelMapper;
 import com.ymhase.miniTwit.model.UserModel;
 
 @Repository
-public class LoginDaoImp implements LoginDao {
+public class LoginDaoImp  {
 
 	@Autowired
 	NamedParameterJdbcTemplate jdbctemplate;

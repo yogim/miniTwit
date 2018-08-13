@@ -9,7 +9,7 @@ import com.ymhase.miniTwit.AppConstant;
 import com.ymhase.miniTwit.model.UserModel;
 
 @Repository
-public class RegistrationDaoImp implements RegistrationDao {
+public class RegistrationDaoImp  {
 
 	@Autowired
 	NamedParameterJdbcTemplate jdbctemplate;
