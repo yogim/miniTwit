@@ -3,6 +3,8 @@ package com.ymhase.miniTwit.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.ymhase.miniTwit.dao.SessionDaoImp;
+import com.ymhase.miniTwit.exception.CustomException;
+import com.ymhase.miniTwit.exception.ErrorCode;
 
 @Repository
 public class SessionService {
@@ -10,9 +12,13 @@ public class SessionService {
 	@Autowired
 	SessionDaoImp sessionDao;
 
-	public boolean isSessionValid(String sessionKey) {
+	public boolean isSessionValid(String sessionKey) throws CustomException {
 
-		return sessionDao.isSessionValid(sessionKey);
+		if (sessionDao.isSessionValid(sessionKey) == 0)
+			throw new CustomException(ErrorCode.UNAUTHORIZED);
+
+		return true;
+
 	}
 
 	public boolean deleteSession(String sessionKey) {
@@ -25,9 +31,14 @@ public class SessionService {
 		return sessionDao.createSessionId(userId);
 	}
 
-	public String getUserIdBysessionKey(String sessionKey) {
+	public String getUserIdBysessionKey(String sessionKey) throws CustomException {
 
-		return sessionDao.getUseridBySessionId(sessionKey);
+		String userID = sessionDao.getUseridBySessionId(sessionKey);
+
+		if (userID.equals(null) || " ".equals(userID))
+			throw new CustomException(ErrorCode.NOT_FOUND);
+
+		return userID;
 	}
 
 }

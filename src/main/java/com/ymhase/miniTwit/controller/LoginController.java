@@ -46,6 +46,9 @@ public class LoginController {
 		Map<String, Object> response = new HashMap<String, Object>();
 		String username = userService.forgotUsername(email);
 
+		if (username.equals(null) || " ".equals(username))
+			throw new CustomException(ErrorCode.NOT_FOUND);
+
 		response.put("username", username);
 		return response;
 

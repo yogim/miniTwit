@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ymhase.miniTwit.dto.TwitDto;
+import com.ymhase.miniTwit.exception.CustomException;
 import com.ymhase.miniTwit.mapper.TweetFollowingMapper;
 import com.ymhase.miniTwit.mapper.TweetModelMapper;
 import com.ymhase.miniTwit.service.SessionService;
@@ -27,7 +28,7 @@ public class TwitController {
 	SessionService sessionService;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getmytweets")
-	public List<TweetModelMapper> getTweetByuserID(HttpServletRequest req, HttpServletResponse response) {
+	public List<TweetModelMapper> getTweetByuserID(HttpServletRequest req, HttpServletResponse response) throws CustomException {
 
 		String userid = sessionService.getUserIdBysessionKey(req.getHeader("x-api-key"));
 
@@ -35,7 +36,7 @@ public class TwitController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getfollowerstwit")
-	public List<TweetFollowingMapper> getfollowerTweet(HttpServletRequest req, HttpServletResponse response) {
+	public List<TweetFollowingMapper> getfollowerTweet(HttpServletRequest req, HttpServletResponse response) throws CustomException {
 
 		String userid = sessionService.getUserIdBysessionKey(req.getHeader("x-api-key"));
 
@@ -43,7 +44,7 @@ public class TwitController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/twit")
-	public void twit(@RequestBody TwitDto twitDto, HttpServletRequest req, HttpServletResponse response) {
+	public void twit(@RequestBody TwitDto twitDto, HttpServletRequest req, HttpServletResponse response) throws CustomException {
 
 		String userid = sessionService.getUserIdBysessionKey(req.getHeader("x-api-key"));
 

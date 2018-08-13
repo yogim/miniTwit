@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.ymhase.miniTwit.AppConstant;
 import com.ymhase.miniTwit.mapper.TweetFollowingMapper;
 import com.ymhase.miniTwit.mapper.TweetModelMapper;
-import com.ymhase.miniTwit.model.TweetModel;
+import com.ymhase.miniTwit.model.TwitModel;
 
 @Repository
 public class TweetDaoImp implements TweetDao {
@@ -59,7 +59,7 @@ public class TweetDaoImp implements TweetDao {
 			return false;
 	}
 
-	public boolean insertTweet(TweetModel tweetModel) {
+	public boolean insertTweet(TwitModel tweetModel) {
 
 		int insertStatus;
 
@@ -78,7 +78,7 @@ public class TweetDaoImp implements TweetDao {
 
 	}
 
-	public void createTwit(String userid, TweetModel tweetModel) {
+	public void createTwit(String userid, TwitModel tweetModel) {
 
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("tweetid", tweetModel.getTweeId());

@@ -26,7 +26,7 @@ public class FollowingController {
 	SessionService sessionService;
 
 	@RequestMapping(method = RequestMethod.POST, value = "/follow/{followerID}")
-	public void follow(@PathVariable String followerID, HttpServletRequest req, HttpServletResponse resp) {
+	public void follow(@PathVariable String followerID, HttpServletRequest req, HttpServletResponse resp) throws CustomException {
 
 		String userid = sessionService.getUserIdBysessionKey(req.getHeader("x-api-key"));
 
@@ -35,7 +35,7 @@ public class FollowingController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/unfollow/{followerID}")
-	public void unfollow(@PathVariable String followerID, HttpServletRequest req, HttpServletResponse resp) {
+	public void unfollow(@PathVariable String followerID, HttpServletRequest req, HttpServletResponse resp) throws CustomException {
 
 		String userid = sessionService.getUserIdBysessionKey(req.getHeader("x-api-key"));
 

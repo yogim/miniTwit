@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ymhase.miniTwit.exception.CustomException;
 import com.ymhase.miniTwit.model.UserModel;
 import com.ymhase.miniTwit.service.SessionService;
 import com.ymhase.miniTwit.service.UserService;
@@ -25,7 +26,7 @@ public class UserController {
 	SessionService sessionService;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getuserdetails")
-	public Map<String, Object> getUserDetails(HttpServletRequest req, HttpServletResponse resp) {
+	public Map<String, Object> getUserDetails(HttpServletRequest req, HttpServletResponse resp) throws CustomException{
 
 		Map<String, Object> response = new HashMap<String, Object>();
 
@@ -39,7 +40,7 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/deleteuser")
-	public void deleteUser(HttpServletRequest req, HttpServletResponse resp) {
+	public void deleteUser(HttpServletRequest req, HttpServletResponse resp) throws CustomException {
 
 		String userid = sessionService.getUserIdBysessionKey(req.getHeader("x-api-key"));
 		userService.deleteUser(userid);

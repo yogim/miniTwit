@@ -17,7 +17,7 @@ public class SessionDaoImp {
 	@Autowired
 	NamedParameterJdbcTemplate jdbctemplate;
 
-	public String getUseridBySessionId(String sessionId) throws CustomException {
+	public String getUseridBySessionId(String sessionId)  {
 		String userID = null;
 
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
@@ -25,9 +25,6 @@ public class SessionDaoImp {
 		System.out.println(sessionId);
 
 		userID = jdbctemplate.queryForObject(AppConstant.GET_USERID_BYSESSION, namedParameters, String.class);
-
-		if (userID.equals(null) || " ".equals(userID))
-			throw new CustomException(ErrorCode.NOT_FOUND);
 
 		return userID;
 	}
@@ -57,7 +54,7 @@ public class SessionDaoImp {
 
 	}
 
-	public boolean isSessionValid(String sessionid) throws CustomException {
+	public int isSessionValid(String sessionid) throws CustomException {
 
 		Integer insertStatus;
 
@@ -66,10 +63,7 @@ public class SessionDaoImp {
 
 		insertStatus = jdbctemplate.queryForObject(AppConstant.ISSESSION_VALID, namedParameters, Integer.class);
 
-		if (insertStatus != 1)
-			throw new CustomException(ErrorCode.UNAUTHORIZED);
-
-		return true;
+		return insertStatus;
 
 	}
 }

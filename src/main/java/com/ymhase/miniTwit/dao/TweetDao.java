@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.ymhase.miniTwit.mapper.TweetFollowingMapper;
 import com.ymhase.miniTwit.mapper.TweetModelMapper;
-import com.ymhase.miniTwit.model.TweetModel;
+import com.ymhase.miniTwit.model.TwitModel;
 
 public interface TweetDao {
 
@@ -14,6 +14,6 @@ public interface TweetDao {
 
 	public boolean deleteTweet(String tweetID);
 	
-	public boolean insertTweet(TweetModel tweetModel);
+	public boolean insertTweet(TwitModel tweetModel);
 
 }

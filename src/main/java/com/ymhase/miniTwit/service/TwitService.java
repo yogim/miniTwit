@@ -10,7 +10,7 @@ import com.ymhase.miniTwit.dao.TweetDaoImp;
 import com.ymhase.miniTwit.dto.TwitDto;
 import com.ymhase.miniTwit.mapper.TweetFollowingMapper;
 import com.ymhase.miniTwit.mapper.TweetModelMapper;
-import com.ymhase.miniTwit.model.TweetModel;
+import com.ymhase.miniTwit.model.TwitModel;
 
 @Repository
 public class TwitService {
@@ -30,7 +30,7 @@ public class TwitService {
 
 	public void createtwit(String userid, TwitDto twitDto) {
 
-		TweetModel tweetModel = new TweetModel();
+		TwitModel tweetModel = new TwitModel();
 		tweetModel.setDescription(twitDto.getTwit());
 		tweetModel.setDeletestatus("A");
 		tweetModel.setTweeId(UUID.randomUUID().toString());

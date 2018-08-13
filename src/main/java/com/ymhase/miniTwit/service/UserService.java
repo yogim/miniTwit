@@ -5,12 +5,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ymhase.miniTwit.AppConstant;
-import com.ymhase.miniTwit.dao.RegistrationDaoImp;
 import com.ymhase.miniTwit.dao.UserDaoImp;
-import com.ymhase.miniTwit.dto.LoginDto;
 import com.ymhase.miniTwit.dto.RegistrationDto;
-import com.ymhase.miniTwit.mapper.UserModelMapper;
 import com.ymhase.miniTwit.model.UserModel;
 
 @Service

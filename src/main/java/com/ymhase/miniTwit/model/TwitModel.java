@@ -1,6 +1,6 @@
 package com.ymhase.miniTwit.model;
 
-public class TweetModel {
+public class TwitModel {
 
 	
 	private String tweeId;
