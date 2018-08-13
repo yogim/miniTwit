@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.ymhase.miniTwit.dao.FollowingDaoImp;
 import com.ymhase.miniTwit.exception.CustomException;
 import com.ymhase.miniTwit.exception.ErrorCode;
-import com.ymhase.miniTwit.mapper.FollowerMapper;
 
 @Repository
 public class FollowingService {
@@ -25,9 +24,9 @@ public class FollowingService {
 		followingDaoimp.unfollow(userid, followerID);
 	}
 
-	public List<FollowerMapper> getFollowerList(String userid) throws CustomException {
+	public List<Object> getFollowerList(String userid) throws CustomException {
 
-		List<FollowerMapper> list = followingDaoimp.getFollowerList(userid);
+		List<Object> list = followingDaoimp.getFollowerList(userid);
 		if (list.size() == 0) {
 			new CustomException(ErrorCode.NOT_FOUND);
 		}

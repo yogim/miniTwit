@@ -17,14 +17,18 @@ public class SessionDaoImp {
 	@Autowired
 	NamedParameterJdbcTemplate jdbctemplate;
 
-	public String getUseridBySessionId(String sessionId)  {
+	public String getUseridBySessionId(String sessionId) throws CustomException {
 		String userID = null;
 
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("sessionid", sessionId);
 		System.out.println(sessionId);
 
-		userID = jdbctemplate.queryForObject(AppConstant.GET_USERID_BYSESSION, namedParameters, String.class);
+		try {
+			userID = jdbctemplate.queryForObject(AppConstant.GET_USERID_BYSESSION, namedParameters, String.class);
+		} catch (Exception e) {
+			throw new CustomException(ErrorCode.NOT_FOUND);
+		}
 
 		return userID;
 	}

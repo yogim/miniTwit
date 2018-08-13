@@ -14,14 +14,14 @@ import com.ymhase.miniTwit.mapper.TweetModelMapper;
 import com.ymhase.miniTwit.model.TwitModel;
 
 @Repository
-public class TweetDaoImp implements TweetDao {
+public class TweetDaoImp  {
 
 	@Autowired
 	NamedParameterJdbcTemplate jdbctemplate;
 
-	public List<TweetModelMapper> getTweetbyUserID(String userId) {
+	public List<Object> getTweetbyUserID(String userId) {
 
-		List<TweetModelMapper> list = new ArrayList<TweetModelMapper>();
+		List<Object> list;
 
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("userid", userId);
@@ -33,8 +33,8 @@ public class TweetDaoImp implements TweetDao {
 		return list;
 	}
 
-	public List<TweetFollowingMapper> getFollowerTwit(String userId) {
-		List<TweetFollowingMapper> list = new ArrayList<TweetFollowingMapper>();
+	public List<Object> getFollowerTwit(String userId) {
+		List<Object> list = new ArrayList<Object>();
 
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("userid", userId);

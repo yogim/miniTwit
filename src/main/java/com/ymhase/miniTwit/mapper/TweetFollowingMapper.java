@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.ymhase.miniTwit.model.TwitFollowingModel;
 
-public class TweetFollowingMapper implements RowMapper {
+public class TweetFollowingMapper implements RowMapper<Object> {
 
 	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
 		TwitFollowingModel tweetFollowingModel = new TwitFollowingModel();

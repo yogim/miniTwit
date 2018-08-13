@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.ymhase.miniTwit.model.UserModel;
 
-public class UserModelMapper implements RowMapper {
+public class UserModelMapper implements RowMapper<Object> {
 
 	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
 		UserModel userModel = new UserModel();

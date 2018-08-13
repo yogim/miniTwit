@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.ymhase.miniTwit.dao.TweetDaoImp;
 import com.ymhase.miniTwit.dto.TwitDto;
-import com.ymhase.miniTwit.mapper.TweetFollowingMapper;
-import com.ymhase.miniTwit.mapper.TweetModelMapper;
 import com.ymhase.miniTwit.model.TwitModel;
 
 @Repository
@@ -18,12 +16,12 @@ public class TwitService {
 	@Autowired
 	TweetDaoImp tweetDao;
 
-	public List<TweetModelMapper> getTweetbyUserID(String userId) {
+	public List<Object> getTweetbyUserID(String userId) {
 
 		return tweetDao.getTweetbyUserID(userId);
 	}
 
-	public List<TweetFollowingMapper> getfollowersTweet(String userId) {
+	public List<Object> getfollowersTweet(String userId) {
 
 		return tweetDao.getFollowerTwit(userId);
 	}

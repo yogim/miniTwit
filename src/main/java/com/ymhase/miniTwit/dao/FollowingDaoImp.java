@@ -1,6 +1,5 @@
 package com.ymhase.miniTwit.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,7 +9,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.ymhase.miniTwit.AppConstant;
-import com.ymhase.miniTwit.mapper.FollowerMapper;
 import com.ymhase.miniTwit.mapper.TweetFollowingMapper;
 
 @Repository
@@ -39,8 +37,8 @@ public class FollowingDaoImp {
 
 	}
 
-	public List<FollowerMapper> getFollowerList(String userid) {
-		List<FollowerMapper> list ;
+	public List<Object> getFollowerList(String userid) {
+		List<Object> list ;
 
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("userid", userid);

@@ -24,7 +24,7 @@ public class LoginDaoImp implements LoginDao {
 		namedParameters.addValue("password", password);
 
 		System.out.println(username + password);
-		UserModel model = jdbctemplate.queryForObject(AppConstant.GET_USER_BY_USERNAME_PASSWORD, namedParameters,
+		UserModel model = (UserModel) jdbctemplate.queryForObject(AppConstant.GET_USER_BY_USERNAME_PASSWORD, namedParameters,
 				new UserModelMapper());
 
 		if (model.getUserName().equals(username) && model.getPassword().equals(password)) {

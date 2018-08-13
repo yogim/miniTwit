@@ -8,7 +8,7 @@ import com.ymhase.miniTwit.model.TwitModel;
 
 public interface TweetDao {
 
-	public List<TweetModelMapper> getTweetbyUserID(String userId);
+	public List<Object> getTweetbyUserID(String userId);
 
 	public List<TweetFollowingMapper> getFollowerTwit(String userId);
 

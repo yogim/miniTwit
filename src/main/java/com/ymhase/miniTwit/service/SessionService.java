@@ -35,9 +35,6 @@ public class SessionService {
 
 		String userID = sessionDao.getUseridBySessionId(sessionKey);
 
-		if (userID.equals(null) || " ".equals(userID))
-			throw new CustomException(ErrorCode.NOT_FOUND);
-
 		return userID;
 	}
 
