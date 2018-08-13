@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.ymhase.miniTwit.QueriesConstant;
+import com.ymhase.miniTwit.AppConstant;
 import com.ymhase.miniTwit.mapper.UserModelMapper;
 import com.ymhase.miniTwit.model.UserModel;
 
@@ -24,7 +24,7 @@ public class LoginDaoImp implements LoginDao {
 		namedParameters.addValue("password", password);
 
 		System.out.println(username + password);
-		UserModel model = jdbctemplate.queryForObject(QueriesConstant.getUserByUernamePassword, namedParameters,
+		UserModel model = jdbctemplate.queryForObject(AppConstant.GET_USER_BY_USERNAME_PASSWORD, namedParameters,
 				new UserModelMapper());
 
 		if (model.getUserName().equals(username) && model.getPassword().equals(password)) {
@@ -39,7 +39,7 @@ public class LoginDaoImp implements LoginDao {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("email", email);
 
-		String usernname = jdbctemplate.queryForObject(QueriesConstant.getUsernameByEmail, namedParameters,
+		String usernname = jdbctemplate.queryForObject(AppConstant.GET_USERNAME_BY_EMAIL, namedParameters,
 				String.class);
 
 		return usernname;

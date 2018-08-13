@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.ymhase.miniTwit.QueriesConstant;
+import com.ymhase.miniTwit.AppConstant;
 import com.ymhase.miniTwit.mapper.TweetFollowingMapper;
 import com.ymhase.miniTwit.mapper.TweetModelMapper;
 import com.ymhase.miniTwit.model.TweetModel;
@@ -28,7 +28,7 @@ public class TweetDaoImp implements TweetDao {
 
 		System.out.println(userId);
 
-		list = jdbctemplate.query(QueriesConstant.getTweetbyUserID, namedParameters, new TweetModelMapper());
+		list = jdbctemplate.query(AppConstant.GET_TWEET_BY_USERID, namedParameters, new TweetModelMapper());
 
 		return list;
 	}
@@ -39,7 +39,7 @@ public class TweetDaoImp implements TweetDao {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("userid", userId);
 
-		list = jdbctemplate.query(QueriesConstant.getTweetForFollowing, namedParameters, new TweetFollowingMapper());
+		list = jdbctemplate.query(AppConstant.GET_TWEET_FOR_FOLLOWING, namedParameters, new TweetFollowingMapper());
 
 		return list;
 
@@ -51,7 +51,7 @@ public class TweetDaoImp implements TweetDao {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("tweetID", tweetID);
 
-		insertStatus = jdbctemplate.update(QueriesConstant.deleteTweet, namedParameters);
+		insertStatus = jdbctemplate.update(AppConstant.DELETE_TWEET, namedParameters);
 
 		if (insertStatus == 1)
 			return true;
@@ -69,7 +69,7 @@ public class TweetDaoImp implements TweetDao {
 		namedParameters.addValue("description", tweetModel.getDescription());
 		namedParameters.addValue("deletestatus", tweetModel.getDeletestatus());
 
-		insertStatus = jdbctemplate.update(QueriesConstant.insertTweet, namedParameters);
+		insertStatus = jdbctemplate.update(AppConstant.INSERT_TWEET, namedParameters);
 
 		if (insertStatus == 1)
 			return true;
@@ -86,7 +86,7 @@ public class TweetDaoImp implements TweetDao {
 		namedParameters.addValue("description", tweetModel.getDescription());
 		namedParameters.addValue("deletestatus", tweetModel.getDeletestatus());
 
-		jdbctemplate.update(QueriesConstant.insertTweet, namedParameters);
+		jdbctemplate.update(AppConstant.INSERT_TWEET, namedParameters);
 
 	}
 

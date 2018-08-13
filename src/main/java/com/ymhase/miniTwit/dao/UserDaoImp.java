@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.ymhase.miniTwit.QueriesConstant;
+import com.ymhase.miniTwit.AppConstant;
 import com.ymhase.miniTwit.mapper.UserModelMapper;
 import com.ymhase.miniTwit.model.UserModel;
 
@@ -21,7 +21,7 @@ public class UserDaoImp {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("userId", userId);
 
-		mapper = (UserModelMapper) jdbctemplate.query(QueriesConstant.getUserByUserId, namedParameters,
+		mapper = (UserModelMapper) jdbctemplate.query(AppConstant.GET_USER_BY_USERID, namedParameters,
 				new UserModelMapper());
 
 		return mapper;
@@ -33,7 +33,7 @@ public class UserDaoImp {
 		namedParameters.addValue("username", username);
 		namedParameters.addValue("password", password);
 
-		return (UserModel) jdbctemplate.queryForObject(QueriesConstant.getUserByUernamePassword, namedParameters,
+		return (UserModel) jdbctemplate.queryForObject(AppConstant.GET_USER_BY_USERNAME_PASSWORD, namedParameters,
 				new UserModelMapper());
 
 	}
@@ -47,7 +47,7 @@ public class UserDaoImp {
 		namedParameters.addValue("password", password);
 
 		System.out.println(username + password);
-		Integer status = jdbctemplate.queryForObject(QueriesConstant.isvalidUser, namedParameters, Integer.class);
+		Integer status = jdbctemplate.queryForObject(AppConstant.IS_USER_VALID, namedParameters, Integer.class);
 
 		System.out.println(status);
 
@@ -63,7 +63,7 @@ public class UserDaoImp {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("email", email);
 
-		String usernname = jdbctemplate.queryForObject(QueriesConstant.getUsernameByEmail, namedParameters,
+		String usernname = jdbctemplate.queryForObject(AppConstant.GET_USERNAME_BY_EMAIL, namedParameters,
 				String.class);
 
 		return usernname;
@@ -79,7 +79,7 @@ public class UserDaoImp {
 		namedParameters.addValue("email", userModel.getEmail());
 		namedParameters.addValue("password", userModel.getPassword());
 
-		jdbctemplate.update(QueriesConstant.insertUser, namedParameters);
+		jdbctemplate.update(AppConstant.INSERT_USER, namedParameters);
 
 		return userModel;
 
@@ -90,7 +90,7 @@ public class UserDaoImp {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("userid", userID);
 
-		return (UserModel) jdbctemplate.queryForObject(QueriesConstant.getUserByUserId, namedParameters,
+		return (UserModel) jdbctemplate.queryForObject(AppConstant.GET_USER_BY_USERID, namedParameters,
 				new UserModelMapper());
 
 	}
@@ -100,7 +100,7 @@ public class UserDaoImp {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("userid", userid);
 
-		jdbctemplate.update(QueriesConstant.deleteUser, namedParameters);
+		jdbctemplate.update(AppConstant.DELETE_USER, namedParameters);
 
 	}
 

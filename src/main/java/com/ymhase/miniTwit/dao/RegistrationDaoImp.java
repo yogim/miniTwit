@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.ymhase.miniTwit.QueriesConstant;
+import com.ymhase.miniTwit.AppConstant;
 import com.ymhase.miniTwit.model.UserModel;
 
 @Repository
@@ -24,7 +24,7 @@ public class RegistrationDaoImp implements RegistrationDao {
 		namedParameters.addValue("email", userModel.getEmail());
 		namedParameters.addValue("password", userModel.getPassword());
 
-		jdbctemplate.queryForRowSet(QueriesConstant.insertUser, namedParameters);
+		jdbctemplate.queryForRowSet(AppConstant.INSERT_USER, namedParameters);
 
 		return true;
 

@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.ymhase.miniTwit.QueriesConstant;
+import com.ymhase.miniTwit.AppConstant;
 import com.ymhase.miniTwit.mapper.FollowerMapper;
 import com.ymhase.miniTwit.mapper.TweetFollowingMapper;
 
@@ -26,7 +26,7 @@ public class FollowingDaoImp {
 		namedParameters.addValue("userid", userId);
 		namedParameters.addValue("follwinguserid", followingID);
 
-		jdbctemplate.update(QueriesConstant.follow, namedParameters);
+		jdbctemplate.update(AppConstant.FOLLOW, namedParameters);
 
 	}
 
@@ -35,7 +35,7 @@ public class FollowingDaoImp {
 		namedParameters.addValue("userid", userID);
 		namedParameters.addValue("followingID", followingID);
 
-		jdbctemplate.update(QueriesConstant.unfollow, namedParameters);
+		jdbctemplate.update(AppConstant.UNFOLLOW, namedParameters);
 
 	}
 
@@ -45,7 +45,7 @@ public class FollowingDaoImp {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("userid", userid);
 
-		list = jdbctemplate.query(QueriesConstant.getTweetForFollowing, namedParameters, new TweetFollowingMapper());
+		list = jdbctemplate.query(AppConstant.GET_TWEET_FOR_FOLLOWING, namedParameters, new TweetFollowingMapper());
 
 		return list;
 

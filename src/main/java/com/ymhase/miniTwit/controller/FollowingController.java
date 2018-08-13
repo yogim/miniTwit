@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ymhase.miniTwit.exception.CustomException;
 import com.ymhase.miniTwit.service.FollowingService;
 import com.ymhase.miniTwit.service.SessionService;
 
 @RestController
-public class FolloweingController {
+public class FollowingController {
 
 	@Autowired
 	FollowingService followingService;
@@ -43,7 +44,7 @@ public class FolloweingController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/followers")
-	public Map<String, Object> getFollowerList(HttpServletRequest req, HttpServletResponse resp) {
+	public Map<String, Object> getFollowerList(HttpServletRequest req, HttpServletResponse resp) throws CustomException {
 
 		Map<String, Object> response = new HashMap<String, Object>();
 		String userid = sessionService.getUserIdBysessionKey(req.getHeader("x-api-key"));

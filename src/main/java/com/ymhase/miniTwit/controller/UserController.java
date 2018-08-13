@@ -1,5 +1,8 @@
 package com.ymhase.miniTwit.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ymhase.miniTwit.model.UserModel;
 import com.ymhase.miniTwit.service.SessionService;
 import com.ymhase.miniTwit.service.UserService;
 
@@ -15,14 +19,32 @@ import com.ymhase.miniTwit.service.UserService;
 public class UserController {
 
 	@Autowired
-	UserService userservice;
+	UserService userService;
 
 	@Autowired
 	SessionService sessionService;
 
-	@RequestMapping(method = RequestMethod.GET, value = "/usersession")
-	public String session(HttpServletRequest req, HttpServletResponse response) {
+	@RequestMapping(method = RequestMethod.GET, value = "/getuserdetails")
+	public Map<String, Object> getUserDetails(HttpServletRequest req, HttpServletResponse resp) {
 
-		return sessionService.getUserIdBysessionKey(req.getHeader("x-api-key"));
+		Map<String, Object> response = new HashMap<String, Object>();
+
+		String userid = sessionService.getUserIdBysessionKey(req.getHeader("x-api-key"));
+
+		UserModel model = userService.getUserByUserID(userid);
+
+		response.put("user-model", model);
+
+		return response;
 	}
+
+	@RequestMapping(method = RequestMethod.DELETE, value = "/deleteuser")
+	public void deleteUser(HttpServletRequest req, HttpServletResponse resp) {
+
+		String userid = sessionService.getUserIdBysessionKey(req.getHeader("x-api-key"));
+		userService.deleteUser(userid);
+		sessionService.deleteSession(sessionService.getUserIdBysessionKey(req.getHeader("x-api-key")));
+
+	}
+
 }
