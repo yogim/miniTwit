@@ -1,11 +1,28 @@
 package com.ymhase.miniTwit.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
+
 public class RegistrationDto {
+	
+	@NotNull
 	private String firstName;
+	@NotNull
 	private String lastName;
+	@NotNull
+	
 	private String userName;
+	@NotNull
+	@Email
 	private String email;
+	@NotNull
+	@Size(min=5, message = "Length of password should be of 5 charachter")
 	private String password;
+	@NotNull
+	@Size(min=5, message = "Length of password should be of 5 charachter")
 	private String confirmPassword;
 
 	public String getFirstName() {

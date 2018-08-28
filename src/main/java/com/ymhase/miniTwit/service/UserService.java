@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ymhase.miniTwit.dao.UserDaoImp;
 import com.ymhase.miniTwit.dto.RegistrationDto;
+import com.ymhase.miniTwit.exception.CustomException;
 import com.ymhase.miniTwit.model.UserModel;
 
 @Service
@@ -21,7 +22,7 @@ public class UserService {
 
 	}
 
-	public boolean isUserValid(String username, String password) {
+	public boolean isUserValid(String username, String password) throws CustomException {
 
 		return userDao.isValiduser(username, password);
 	}
@@ -43,6 +44,17 @@ public class UserService {
 		return userDao.createUser(userModel);
 	}
 
+	public UserModel updateUser(RegistrationDto registrationDto) {
+
+		UserModel userModel = new UserModel();
+		userModel.setUserid(UUID.randomUUID().toString());
+		userModel.setFirstName(registrationDto.getFirstName());
+		userModel.setLastName(registrationDto.getLastName());
+		userModel.setUserName(registrationDto.getUserName());
+		userModel.setEmail(registrationDto.getEmail());
+		userModel.setPassword(registrationDto.getPassword());
+		return userDao.updateUser(userModel);
+	}
 	public UserModel getUserByUserID(String userID) {
 		return userDao.getUserByUserID(userID);
 

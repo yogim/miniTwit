@@ -32,5 +32,14 @@ public class FollowingService {
 		}
 		return list;
 	}
+	
+	public List<Object> getFollowingList(String userid) throws CustomException {
+
+		List<Object> list = followingDaoimp.getFollowingList(userid);
+		if (list.size() == 0) {
+			new CustomException(ErrorCode.NOT_FOUND);
+		}
+		return list;
+	}
 
 }

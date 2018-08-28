@@ -1,8 +1,12 @@
 package com.ymhase.miniTwit.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class LoginDto {
 
+	@NotNull(message = "User name can not be null")
 	private String username;
+	@NotNull
 	private String password;
 
 	public String getUsername() {

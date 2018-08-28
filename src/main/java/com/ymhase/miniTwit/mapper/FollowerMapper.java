@@ -14,9 +14,8 @@ public class FollowerMapper implements RowMapper<Object> {
 
 		followerModel.setFirstname(rs.getString("firstname"));
 		followerModel.setLastname(rs.getString("lastname"));
-		followerModel.setUserid(rs.getString("userid"));
 
-		return null;
+		return followerModel;
 	}
 
 }

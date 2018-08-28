@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.ymhase.miniTwit.AppConstant;
+import com.ymhase.miniTwit.exception.CustomException;
+import com.ymhase.miniTwit.exception.ErrorCode;
 import com.ymhase.miniTwit.mapper.UserModelMapper;
 import com.ymhase.miniTwit.model.UserModel;
 
@@ -38,7 +40,7 @@ public class UserDaoImp {
 
 	}
 
-	public boolean isValiduser(String username, String password) {
+	public boolean isValiduser(String username, String password) throws CustomException {
 
 		System.out.println(username + password);
 
@@ -46,16 +48,14 @@ public class UserDaoImp {
 		namedParameters.addValue("username", username);
 		namedParameters.addValue("password", password);
 
-		System.out.println(username + password);
 		Integer status = jdbctemplate.queryForObject(AppConstant.IS_USER_VALID, namedParameters, Integer.class);
 
-		System.out.println(status);
+		if (status != 1) {
 
-		if (status == 1) {
-			return true;
+			throw new CustomException(ErrorCode.NOT_FOUND);
 		}
 
-		return false;
+		return true;
 	}
 
 	public String getUsername(String email) {
@@ -84,6 +84,25 @@ public class UserDaoImp {
 		return userModel;
 
 	}
+	
+	
+	
+	public UserModel updateUser(UserModel userModel) {
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("userid", userModel.getUserid());
+		namedParameters.addValue("firstName", userModel.getFirstName());
+		namedParameters.addValue("lastName", userModel.getLastName());
+		namedParameters.addValue("userName", userModel.getUserName());
+		namedParameters.addValue("email", userModel.getEmail());
+		namedParameters.addValue("password", userModel.getPassword());
+
+		jdbctemplate.update(AppConstant.INSERT_USER, namedParameters);
+
+		return userModel;
+
+	}
+
 
 	public UserModel getUserByUserID(String userID) {
 

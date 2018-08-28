@@ -8,13 +8,14 @@ public class AppConstant {
 	public static final String GET_USERNAME_BY_EMAIL = "SELECT username FROM users WHERE email = :email AND deletestatus = 'A';";
 	public static final String GET_USER_BY_USERID = "SELECT * FROM users WHERE user_id = :userid AND deletestatus = 'A';";
 	public static final String INSERT_USER = "INSERT INTO users (user_id, firstname, lastname, username, email, password, deletestatus) VALUES ( :userid, :firstName, :lastName, :userName, :email, :password, 'A');";
+	public static final String UPDATE_USER = "UPDATE users SET firstname = :firstName, lastname = :lastName, username = :userName, email = :email, password = :password WHERE user_id = :userid AND deletestatus = 'A';";
 	public static final String DELETE_USER = "UPDATE users SET deletestatus = 'D' WHERE user_id = :userid ;";
 	
-	//Following
+/*	//Following
 	public static final String FOLLOW = "INSERT INTO following (followingid, user_id, follwing_user_id, deletestatus) VALUES( :followingid, :userid, :follwinguserid, 'A');";
 	public static final String UNFOLLOW = "UPDATE following SET deletestatus = 'D' WHERE user_id= :userid AND follwing_user_id = :followingID ;";
 	public static final String FOLLOWER_LIST ="SELECT users.user_id AS userid, users.firstname AS firstname , users.lastname AS lastname FROM users LEFT JOIN following  ON users.user_id = following.follwing_user_id WHERE following.follwing_user_id IN (SELECT follwing_user_id from following WHERE user_id = :userid  AND deletestatus = 'A' ) AND following.deletestatus = 'A' ;";
-
+*/
 	//SESSION
 	public static final String CREATE_SESSION = "INSERT INTO session (sessionid, user_id, deletestatus) VALUES( :sessionid, :userid, 'A');";
 	public static final String DELETE_SESSION = "UPDATE session SET deletestatus = 'D' WHERE sessionid= :sessionid ;";
@@ -23,7 +24,15 @@ public class AppConstant {
 
 	//TWEET
 	public static final String GET_TWEET_BY_USERID ="SELECT * FROM tweet WHERE user_id = :userid AND deletestatus = 'A';";
-	public static final String GET_TWEET_FOR_FOLLOWING = "SELECT tweet.user_id AS user_id , tweet.description AS description, users.firstname AS firstname , users.lastname AS lastName FROM tweet LEFT JOIN users ON users.user_id = tweet.user_id WHERE tweet.user_id IN  (SELECT follwing_user_id FROM following WHERE user_id = :userid AND deletestatus = 'A' ) AND tweet.deletestatus = 'A' ;";
+	public static final String GET_TWEET_FOR_FOLLOWING = "SELECT tweet.user_id AS user_id , tweet.description AS description, users.firstname AS firstname , users.lastname AS lastName FROM tweet LEFT JOIN users ON users.user_id = tweet.user_id WHERE tweet.user_id IN  (SELECT following_id FROM followermap WHERE follower_id = :userid AND deletestatus = 'A' ) AND tweet.deletestatus = 'A' ;";
 	public static final String DELETE_TWEET ="UPDATE tweet SET deletestatus = 'D' WHERE tweetid = :tweetid;";
 	public static final String INSERT_TWEET ="INSERT INTO tweet (tweetid, user_id, description, deletestatus) VALUES ( :tweetid, :userid, :description, :deletestatus) ;";
+	
+	//FollowerMap
+	public static final String FOLLOW = "INSERT INTO followermap (mapid, follower_id, following_id, deletestatus) VALUES( :mapid, :followerid, :followinguserid, 'A');";
+	public static final String UNFOLLOW = "UPDATE followermap SET deletestatus = 'D' WHERE follower_id= :userid AND following_id = :followingID ;";
+	public static final String FOLLOWER_LIST = "SELECT  users.firstname AS firstname , users.lastname AS lastname FROM users LEFT JOIN followermap ON  users.user_id = followermap.follower_id WHERE followermap.following_id IN  (SELECT following_id from followermap WHERE following_id = :following_id  AND deletestatus = 'A' ) AND followermap.deletestatus = 'A';";
+	public static final String FOLLOWING_LIST = "SELECT users.firstname AS firstname , users.lastname AS lastname FROM users LEFT JOIN followermap ON users.user_id = followermap.following_id WHERE followermap.follower_id IN (SELECT follower_id from followermap WHERE follower_id = :follower_id  AND deletestatus = 'A' ) AND followermap.deletestatus = 'A';";
+
+
 }
