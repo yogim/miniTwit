@@ -97,8 +97,8 @@ public class UserDaoImp {
 		namedParameters.addValue("email", userModel.getEmail());
 		namedParameters.addValue("password", userModel.getPassword());
 
-		jdbctemplate.update(AppConstant.INSERT_USER, namedParameters);
-
+		jdbctemplate.update(AppConstant.UPDATE_USER, namedParameters);
+		 
 		return userModel;
 
 	}

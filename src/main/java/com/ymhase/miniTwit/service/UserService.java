@@ -44,10 +44,10 @@ public class UserService {
 		return userDao.createUser(userModel);
 	}
 
-	public UserModel updateUser(RegistrationDto registrationDto) {
+	public UserModel updateUser(RegistrationDto registrationDto, String userid) {
 
 		UserModel userModel = new UserModel();
-		userModel.setUserid(UUID.randomUUID().toString());
+		userModel.setUserid(userid);
 		userModel.setFirstName(registrationDto.getFirstName());
 		userModel.setLastName(registrationDto.getLastName());
 		userModel.setUserName(registrationDto.getUserName());
