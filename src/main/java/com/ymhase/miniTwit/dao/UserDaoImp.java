@@ -1,5 +1,7 @@
 package com.ymhase.miniTwit.dao;
 
+import java.awt.print.Printable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -59,14 +61,13 @@ public class UserDaoImp {
 	}
 
 	public String getUsername(String email) {
-
+		String username = null;
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("email", email);
 
-		String usernname = jdbctemplate.queryForObject(AppConstant.GET_USERNAME_BY_EMAIL, namedParameters,
-				String.class);
+		username = jdbctemplate.queryForObject(AppConstant.GET_USERNAME_BY_EMAIL, namedParameters, String.class);
 
-		return usernname;
+		return username;
 	}
 
 	public UserModel createUser(UserModel userModel) {
@@ -84,9 +85,7 @@ public class UserDaoImp {
 		return userModel;
 
 	}
-	
-	
-	
+
 	public UserModel updateUser(UserModel userModel) {
 
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
@@ -98,11 +97,10 @@ public class UserDaoImp {
 		namedParameters.addValue("password", userModel.getPassword());
 
 		jdbctemplate.update(AppConstant.UPDATE_USER, namedParameters);
-		 
+
 		return userModel;
 
 	}
-
 
 	public UserModel getUserByUserID(String userID) {
 

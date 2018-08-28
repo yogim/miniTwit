@@ -63,12 +63,10 @@ public class FollowingController {
 	@RequestMapping(method = RequestMethod.GET, value = "/following")
 	public Map<String, Object> getFollowingList(HttpServletRequest req, HttpServletResponse resp)
 			throws CustomException {
-
 		Map<String, Object> response = new HashMap<String, Object>();
 		String userid = sessionService.getUserIdBysessionKey(req.getHeader("x-api-key"));
 		logger.info(" getting followers list ");
 		response.put("following-list", followingService.getFollowingList(userid));
-
 		return response;
 	}
 }

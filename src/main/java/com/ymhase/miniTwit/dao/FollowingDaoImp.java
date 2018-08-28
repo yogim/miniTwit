@@ -20,10 +20,9 @@ public class FollowingDaoImp {
 	public void follow(String userId, String followingID) {
 
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-		namedParameters.addValue("followingid", UUID.randomUUID().toString());
-		namedParameters.addValue("userid", userId);
-		namedParameters.addValue("follwinguserid", followingID);
-
+		namedParameters.addValue("mapid", UUID.randomUUID().toString());
+		namedParameters.addValue("followerid", userId);
+		namedParameters.addValue("followinguserid", followingID);
 		jdbctemplate.update(AppConstant.FOLLOW, namedParameters);
 
 	}
@@ -32,18 +31,16 @@ public class FollowingDaoImp {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("userid", userID);
 		namedParameters.addValue("followingID", followingID);
-
 		jdbctemplate.update(AppConstant.UNFOLLOW, namedParameters);
 
 	}
 
 	public List<Object> getFollowerList(String userid) {
-		List<Object> list ;
+		List<Object> list;
 
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("following_id", userid);
 		System.out.println(userid);
-
 		list = jdbctemplate.query(AppConstant.FOLLOWER_LIST, namedParameters, new FollowerMapper());
 
 		return list;
@@ -51,7 +48,7 @@ public class FollowingDaoImp {
 	}
 
 	public List<Object> getFollowingList(String userid) {
-		List<Object> list ;
+		List<Object> list;
 
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue("follower_id", userid);

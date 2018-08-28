@@ -23,7 +23,6 @@ public class RegistrationDaoImp  {
 		namedParameters.addValue("userName", userModel.getUserName());
 		namedParameters.addValue("email", userModel.getEmail());
 		namedParameters.addValue("password", userModel.getPassword());
-
 		jdbctemplate.queryForRowSet(AppConstant.INSERT_USER, namedParameters);
 
 		return true;

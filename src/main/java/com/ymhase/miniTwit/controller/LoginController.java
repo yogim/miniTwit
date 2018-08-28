@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ymhase.miniTwit.dto.LoginDto;
 import com.ymhase.miniTwit.exception.CustomException;
-import com.ymhase.miniTwit.exception.ErrorCode;
 import com.ymhase.miniTwit.model.UserModel;
 import com.ymhase.miniTwit.service.SessionService;
 import com.ymhase.miniTwit.service.UserService;
@@ -28,36 +29,37 @@ public class LoginController {
 
 	@Autowired
 	SessionService sessionService;
-	
+
 	private static final Logger logger = Logger.getLogger(LoginController.class);
 
-
 	@RequestMapping(method = RequestMethod.POST, value = "/login")
-	public Map<String, Object> login(@RequestBody @Valid LoginDto loginDto) throws CustomException {
+	public ResponseEntity<?> login(@RequestBody @Valid LoginDto loginDto) {
+		logger.info("Inside login controller");
+		UserModel model = userService.getUserbyUsernameAndPassword(loginDto.getUsername(), loginDto.getPassword());
 
-		Map<String, Object> response = new HashMap<String, Object>();
-		if ((userService.isUserValid(loginDto.getUsername(), loginDto.getPassword()))) {
-			UserModel model = userService.getUserbyUsernameAndPassword(loginDto.getUsername(), loginDto.getPassword());
-			response.put("usermodel", model);
-			response.put("session-key", sessionService.createSession(model.getUserid()));
-			logger.info("logging user");
-		} else {
-			throw new CustomException(ErrorCode.NOT_FOUND);
+		if (model == null) {
+			logger.info("User not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid user name or password");
 		}
-		return response;
+
+		logger.info("Login Success");
+		return ResponseEntity.status(HttpStatus.OK).body(model);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/forgotusername/{email:.+}")
-	public Map<String, Object> forgotUsername(@PathVariable String email) throws CustomException {
+	public ResponseEntity<?> forgotUsername(@PathVariable String email) throws CustomException {
+		logger.info("Inside forgot username");
 
-		Map<String, Object> response = new HashMap<String, Object>();
 		String username = userService.forgotUsername(email);
 
-		if (username.equals(null) || " ".equals(username))
-			throw new CustomException(ErrorCode.NOT_FOUND);
-
+		if (username.equals(null) || " ".equals(username)) {
+			logger.info("Username not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not registered with this Email ID.");
+		}
+		logger.info("Username found");
+		Map<String, Object> response = new HashMap<String, Object>();
 		response.put("username", username);
-		return response;
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 
 	}
 
